@@ -1,0 +1,19 @@
+{
+  "name": "testing-hook.io",
+  "version": "1.0.0",
+  "description": "+ [x] start trail account for hook.io + [] send a post hook to https://requestbin.com",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MarcMcIntosh/testing-hook.io.git"
+  },
+  "author": "Marc McIntosh",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/MarcMcIntosh/testing-hook.io/issues"
+  },
+  "homepage": "https://github.com/MarcMcIntosh/testing-hook.io#readme"
+}
