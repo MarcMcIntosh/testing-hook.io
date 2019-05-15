@@ -13,7 +13,7 @@ module.exports = function handeler(hook) {
   console.log(`${hook.time} [${req.method}]: from ${JSON.stringify(req.connection)}: for ${url}`);
 
   if(req.method !== 'POST') {
-    res.satus(400)
+    res.status(400)
     return res.end();
   }
   request({
