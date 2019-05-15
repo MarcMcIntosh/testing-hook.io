@@ -10,7 +10,7 @@ module.exports = function handeler(hook) {
   const { req, res } = hook;
   const { url, data } = req.body;
 
-  console.log(`${hook.time} [${req.method}]: from ${JSON.stringify(req.connection)}: for ${url}`);
+  console.log(`[${req.method}]: from ${JSON.stringify(req.connection)}: for ${url}`);
 
   if(req.method !== 'POST') {
     res.status(400)
