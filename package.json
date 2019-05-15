@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/MarcMcIntosh/testing-hook.io/issues"
   },
-  "homepage": "https://github.com/MarcMcIntosh/testing-hook.io#readme"
+  "homepage": "https://github.com/MarcMcIntosh/testing-hook.io#readme",
+  "dependencies": {
+    "request": "^2.88.0"
+  }
 }
