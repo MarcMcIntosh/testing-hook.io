@@ -4,7 +4,7 @@
   "description": "+ [x] start trail account for hook.io + [] send a post hook to https://requestbin.com",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -18,5 +18,8 @@
   "homepage": "https://github.com/MarcMcIntosh/testing-hook.io#readme",
   "dependencies": {
     "request": "^2.88.0"
+  },
+  "devDependencies": {
+    "jest": "^24.8.0"
   }
 }
