@@ -1,4 +1,4 @@
-const request = require('request')
+const request = require('request');
 /* testing client sidewith
 fetch('https://hook.io/marc.mcintosh/testing-post-method', {
   method: 'POST',
@@ -12,20 +12,20 @@ module.exports = function handeler(hook) {
 
   console.log(`[${req.method}]: from ${JSON.stringify(req.connection)}: for ${url}`);
 
-  if(req.method !== 'POST') {
-    res.status(405)
-    return res.end();
+  if (req.method !== 'POST') {
+    return res.status(405).end();
   }
-  request({
+
+  return request({
     url,
     method: 'POST',
     body: data,
     json: true,
-  }, (err, responce, body) => {
-    if(err) {
+  }, (err, responce) => {
+    if (err) {
       console.error(err);
       res.send(err);
     }
     return res.json(responce);
   });
-}
+};

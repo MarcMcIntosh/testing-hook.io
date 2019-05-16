@@ -1,33 +1,70 @@
+/* eslint-env jest */
 const dropRequestsFor = require('../src/dropRequestsFor');
 
 describe('src/dropRequestsFor', () => {
+  describe('should pass', () => {
+    const hook = {
+      req: { body: { url: 'example.com' } },
+      res: {
+        status: jest.fn().mockReturnThis(),
+        send: jest.fn().mockReturnThis(),
+      },
+    };
 
-  it('it returns a function that rejects hooks with a matching ip', () => {
-    const local = dropRequestsFor('127.0.0.1');
+    dropRequestsFor('127.0.0.1')(hook, (err, res) => {
+      expect(hook.res.send).not.toHaveBeenCalled();
+      expect(res).toEqual(hook);
+    });
+  });
+
+  it('configure with an ip, drop matching an ip', () => {
+    const byIp = dropRequestsFor('127.0.0.1');
 
     const hook = {
       req: { body: { url: '127.0.0.1' } },
+      res: {
+        status: jest.fn().mockReturnThis(),
+        send: jest.fn().mockReturnThis(),
+      },
     };
 
-    dropRequestsFor(hook, (err, res) => {
-      expect(err).toBe(true);
+    byIp(hook, () => {
+      expect(hook.res.status).toHaveBeenCalledWith('403');
+      expect(hook.res.send).toHaveBeenCalled();
     });
-
   });
 
-  /* it('p[erforms a dns look up on the payload to find the ip address', () => {
-    const local = dropRequestsFor('127.0.0.1');
-    const hook = {
-      req: {
-        body: {
-          url: 'localhost',
-        }
-      },
-      res: {
-        status: jest.fn(),
-        end: jest.fn()
-      }
-    };
-  }) */
+  it('configure with a domain, look up a domain, should drop', () => {
+    const localhost = dropRequestsFor('localhost');
 
-})
+    const hook = {
+      req: { body: { url: 'localhost' } },
+      res: {
+        status: jest.fn().mockReturnThis(),
+        send: jest.fn().mockReturnThis(),
+      },
+    };
+
+    localhost(hook, () => {
+      expect(hook.res.status).toHaveBeenCalledWith('403');
+      expect(hook.res.send).toHaveBeenCalled();
+    });
+  });
+
+  it('configure a domain, look up an address: should drop', () => {
+    const localhost = dropRequestsFor('127.0.0.1');
+
+    const hook = {
+      req: { body: { url: 'localhost' } },
+      res: {
+        status: jest.fn().mockReturnThis(),
+        send: jest.fn().mockReturnThis(),
+      },
+    };
+
+    localhost(hook, () => {
+      expect(hook.res.status).toHaveBeenCalledWith('403');
+      expect(hook.res.send).toHaveBeenCalled();
+    });
+  });
+});

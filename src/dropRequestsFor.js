@@ -1,16 +1,19 @@
+const dns = require('dns');
 
-const dropRequestsFor = address => (hook, callback) => {
-  const { req: { body: { url }}} = hook;
+const dropRequestsFor = addressToDrop => (hook, callback) => {
+  const { req: { body: { url } } } = hook;
 
-  if (address === url) {
+  return dns.lookup(addressToDrop, (errToDrop, addressIp) => {
+    if (errToDrop) { return callback(errToDrop, hook); }
 
-    console.log('Rejectng request for ' + JSON.stringify(hook.req));
-    return callback(true, hook)
-    // hook.res.status(403);
-    // hook.res.send(`Refussing to send hook to ${url}`);
+    return dns.lookup(url, (err, targetIp) => {
+      if (targetIp === addressIp) {
+        return hook.res.status(403).send('blocked url');
+      }
 
-  }
-  
-}
+      return callback(null, hook);
+    });
+  });
+};
 
 module.exports = dropRequestsFor;
